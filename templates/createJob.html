@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block active_link %}jobs-link{% endblock %}
+
+{% block body %}
+
+<div class="form-holder">
+
+        <div class="form-cell">
+            <form action="/postJob" method="POST">
+                <h3 class="text-center">Post a job listing</h3>
+
+                    <div class="form-group">
+                        <label for="position">Position:</label><br>
+                        <input required type="text" name="position" id="position" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company Name:</label><br>
+                        <input required type="text" name="company" id="company" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="term">Employment Term:</label><br>
+                        <select name="term" id="term" class="form-control">
+                            <option>Full-Time, Permanent</option>
+                            <option>Full-Time, Temporary</option>
+                            <option>Part-Time, Year Round</option>
+                            <option>Part-Time, Seasonal</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="requirements">Requirements:</label><br>
+                        <input type="text" name="requirements" id="requirements" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location:</label><br>
+                        <input type="text" name="location" id="location" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="salary">Salary:</label><br>
+                        <input type="text" name="salary" id="salary" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label><br>
+                        <textarea name="description" id="description" rows="10" cols="80" class="form-control"></textarea>
+                    </div>
+
+                    <input type="submit" class="btn btn-light" name="submit" value="Create">
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

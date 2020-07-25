@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block active_link %}jobs-link{% endblock %}
+
+{% block body %}
+    <div class="flex-container" id="card-capsule">
+        <div id="jobTitle">
+            <h4>{{ job.position }}</h4>
+            <h6>at {{ job.company }}</h6>
+        </div>
+        <br>
+        <div id="jobTerm">
+            <h5>Employment Term:</h5>
+            <a>{{ job.term }}</a>
+        </div>
+        <br>
+        <div id="jobRequirements">
+            <h5>Requirements:</h5>
+            <a>{{ job.requirements }}</a>
+        </div>
+        <br>
+        <div id="jobLocation">
+            <h5>Location:</h5>
+            <a>{{ job.location }}</a>
+        </div>
+        <br>
+        <div id="jobSalary">
+            <h5>Salary:</h5>
+            <a>{{ job.salary }}</a>
+        </div>
+        <br>
+        <div id="jobDesc">
+            <h5>Description:</h5>
+            <p>{{ job.description }}</p>
+        </div>
+        {% if 'user' in session %}
+        <form action="/apply" method="post">
+            <input type="hidden" name="jobid" value="{{ job._id }}">
+            <button class="button" type="submit">Apply</button>
+        </form>
+        {% endif %}
+    </div>
+{% endblock %}

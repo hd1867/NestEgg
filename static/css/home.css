@@ -1,0 +1,22 @@
+#title {
+	text-decoration-color: black;
+	text-align: center;
+	text-decoration: underline;
+	text-decoration-style: double;
+	text-decoration-thickness: 3px;
+	margin: 10px;
+}
+
+#intro {
+	margin: 3vw;
+	font-size: 20px;
+	width: 100vw;
+}
+
+#card-capsule {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	align-items: flex-start;
+}

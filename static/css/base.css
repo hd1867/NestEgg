@@ -1,0 +1,140 @@
+
+hr {
+    background-color: #FAF24B;
+    color: black;
+}
+
+
+.container {
+    width: 600px;
+}
+
+.nav {
+    background-color: #Faf24b;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.container .row button {
+    line-height: 3em;
+}
+
+.card {
+    background-color: #Faf24b;
+    margin: 3vw;
+    padding: 1vw;
+    border-style: outset;
+    width: 20vw;
+    position: relative;
+}
+
+label {
+  width: 80%;
+}
+
+button {
+    font-family: sans-serif;
+    border-radius: 5vh;
+    background-color: #FAF24B;
+    min-height: 50px;
+    min-width: 200px;
+    border-color: black;
+    border-style: solid;
+    border-block-width: 3px
+
+}
+
+.container.center{
+    position: center;
+}
+
+#background{
+    background-color: #FFF;
+    width: 80vw;
+    position: absolute;
+    height: available;
+    left: 10vw;
+}
+
+.btn {
+    font-family: sans-serif;
+    border-radius: 5vh;
+    background-color: #FAF24B;
+    min-height: 50px;
+    min-width: 200px;
+    border-color: black;
+    border-style: solid;
+    color: black;
+}
+
+.btn-light {
+    border: solid 1px #d7d7d7;
+}
+
+.form-holder {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    color: black;
+}
+
+.form-holder .form-cell {
+    border: solid 2px #000000;
+    border-radius: 20px;
+    float: left;
+    background-color: #FAF24B;
+    padding: 3em;
+    margin: 0 1em;
+    color: black;
+}
+
+.form-holder .form-cell input[type=text], .form-holder .form-cell input[type=password] {
+    width: 20em;
+}
+
+@media screen and (max-width: 900px) {
+    .form-holder {
+        display: block;
+    }
+    .form-holder .form-cell {
+        display: block;
+        float: none;
+        width: 80%;
+        margin: auto;
+        font-size: 3vw;
+        text-align: center;
+    }
+}
+
+.grip-container {
+    display: grid;
+    grid-gap: 100px;
+}
+
+textarea {
+    min-width: 80%;
+}
+
+body {
+    background-color: Black;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #FFFFFF;
+    background-color: #000;
+    border-color: #000;
+
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs {
+    border-bottom-width: 0px;
+}
+
+.nav-tabs li a
+{
+    color: #000
+}

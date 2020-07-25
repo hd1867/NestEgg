@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block active_link %}jobs-link{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jobs.css' ) }}">
+{% endblock %}
+
+{% block body %}
+    {% if session['admin'] %}
+    <button id="jobsCreate" onclick="document.location.href='/createJob'">Create a Job</button>
+    {% endif %}
+    <div class="column">
+        <table class="display" id="jobsTable">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Company</th>
+                    <th>Employment Term</th>
+                    <th>Requirements</th>
+                    <th>Location</th>
+                    <th>Salary</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for job in jobs %}
+                <tr>
+                    <td>{{ job.position }}</td>
+                    <td>{{ job.company }}</td>
+                    <td>{{ job.term }}</td>
+                    <td>{{ job.requirements }}</td>
+                    <td>{{ job.location }}</td>
+                    <td>{{ job.salary }}</td>
+                    <td><button type="button" onclick="window.location.href='{{ url_for('job', jobid=(job._id|string)) }}'">Details</button></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jobs.js' ) }}"></script>
+{% endblock %}

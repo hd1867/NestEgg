@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block active_link %}class-link{% endblock %}
+
+{% block body %}
+    {% if session['admin'] %}
+    <button id="jobsCreate" onclick="document.location.href='/createHouse'">Create a Listing</button>
+    {% endif %}
+
+    <div class="column">
+        <table class="display" id="classesTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Prerequisites</th>
+                    <th>Description</th>
+                    <th>Take Class</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for class in classes %}
+                <tr>
+                    <td>{{ class.name }}</td>
+                    <td>{{ class.prerequisites }}</td>
+                    <td>{{ class.description }}</td>
+                    <td><button type="button" onclick="window.location.href='{{ url_for('job', classid=(class._id|string)) }}'">Take Class</button></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/classes.js' ) }}"></script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block active_link %}home-link{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css' ) }}">
+{% endblock %}
+
+{% block body %}
+    <div id="card-capsule">
+        <div class="card" id="intro">
+            <div id="title">What is NestEgg?</div>
+            NestEgg is a platform that allows incarcerated individuals to receive training and apply for jobs and housing in order to have a foothold before their release.
+            By giving people a chance to prepare for life before leaving prison, our goal is to lower recidivism rates and turn incarceration into a restorative rather than
+            punitive experience. By offering access to online trainings and certifications, classes in financial management and responsibility, pre-screened job applications,
+            and affordable housing, it is our hope that people will leave the prison system in a better position to succeed than when they went in.
+        </div>
+        <div class="card" id="news">
+            <div id="title">News</div>
+            <div>
+
+            </div>
+        </div>
+        <div class="card" id="classes">
+            <div id="title">Latest Classes</div>
+            <div>
+
+            </div>
+        </div>
+        <div class="card" id="jobs">
+            <div id="title">Newest Jobs</div>
+            <div>
+
+            </div>
+        </div>
+        {% if 'user' in session %}
+        <div class="card" id="watchlist">
+            <div id="title">Housing Watchlist</div>
+            <div>
+
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

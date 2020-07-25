@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <link rel="shortcut icon" href="static/img/icon.png"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css' ) }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js' ) }}"></script>
+        {% block css %}{% endblock %}
+
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+
+    <body>
+        <nav class="nav-tabs">
+            <ul class="nav" role="tablist">
+                <img class="mr-auto" src="static/img/icon.png" style="width: 32px; height:32px"></img>
+                <li class="nav-item"><a id="home-link" class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a id="jobs-link" class="nav-link" href="/jobs">Jobs</a></li>
+                <li class="nav-item"><a id="house-link" class="nav-link" href="/housing">Housing</a></li>
+                <li class="nav-item"><a id="class-link" class="nav-link" href="/classes">Classes and Trainings</a></li>
+                <li class="nav-item"><a id="report-link" class="nav-link" href="/report">Report An Issue</a></li>
+
+                {% if 'user' in session %}
+                <li class="nav-item"><a id="profile-link" class="nav-link" href="{{'/profile/' + session.username }}">Profile</a></li>
+                {% endif %}
+
+                {% if 'user' in session %}
+                <li class="nav-item"><a id="logout-link" class="nav-link" href="/logout">Logout</a></li>
+                {% else %}
+                <li class="nav-item"><a id="login-link" class="nav-link" href="/login">Login/Sign Up</a></li>
+                {% endif %}
+            </ul>
+
+            {% for message in get_flashed_messages() %}
+
+            <h6 class="text-center alert alert-danger">{{ message }}</h6>
+
+            {% endfor %}
+
+            <br>
+        </nav>
+
+        <div id="background">
+            {% block body %}{% endblock %}
+        </div>
+
+        <script type="text/javascript">
+            document.getElementById("{% block active_link %}{% endblock %}").classList.add("active");
+        </script>
+
+        {% block js %}{% endblock %}
+
+    </body>
+
+</html>

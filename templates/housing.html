@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block active_link %}house-link{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/housing.css' ) }}">
+{% endblock %}
+
+{% block body %}
+    {% if session['admin'] %}
+    <button id="jobsCreate" onclick="document.location.href='/createHouse'">Create a Listing</button>
+    {% endif %}
+    <div class="flex-container" id="card-capsule">
+
+    {% for house in houses %}
+        <div class="card">
+            <div class="col">
+                <img id="houseImage" src="{{ 'static/img/' + house.img }}" alt="houseImage">
+                <div class="row">
+                    <div class="col">
+                        <label id="priceTitle">Price</label>
+                        <label id="price">{{ house.price }}</label>
+                    </div>
+                    <div class="col">
+                        <label id="locTitle">Location</label>
+                        <label id="location">{{ house.location }}</label>
+                    </div>
+                    <div class="col">
+                        <label id="leaseTitle">Minimum Term</label>
+                        <label id="lease">{{ house.term }}</label>
+                    </div>
+                    <div class="col">
+                        <form action="/addHouse" method="post">
+                            <input type="hidden" name="houseid" value="{{ house.img }}">
+                            <button class="btn" type="submit">Add To Watchlist</button>
+                        </form>
+                        <br>
+                        <button class="btn">Message Owner</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    </div>
+{% endblock %}
