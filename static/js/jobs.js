@@ -1,6 +1,6 @@
 var table;
 $(document).ready( function () {
-    table = $('#classesTable').DataTable( {
+    table = $('#jobsTable').DataTable( {
     searchable: true,
     ordering: true
     } );

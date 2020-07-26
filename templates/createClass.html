@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block active_link %}class-link{% endblock %}
+
+{% block body %}
+
+<div class="form-holder">
+
+        <div class="form-cell">
+            <form action="/postClass" enctype=multipart/form-data method="POST">
+                <h3 class="text-center">Create a Class</h3>
+
+                    <div class="form-group">
+                        <label for="title">Title:</label><br>
+                        <input required type="text" name="title" id="title" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="prerequisites">Prerequisites:</label><br>
+                        <input required type="text" name="prerequisites" id="prerequisites" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label><br>
+                        <textarea name="description" id="description" rows="10" cols="80" class="form-control"></textarea>
+                    </div>
+                    <a>Pages</a>
+                    <br>
+                    <a>-------------------</a>
+                    {% for i in range(numPages|int) %}
+                    <h6>{{ "Page " + (i + 1)|string }}</h6>
+                    <br>
+                    <div class="form-group">
+                        <label for="{{ "page-" + (i + 1)|string + "-title" }}">Title:</label>
+                        <input required type="text" name="{{ "page-" + (i + 1)|string + "-title" }}" id="{{ "page-" + (i + 1)|string + "-title" }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type">Page Type:</label><br>
+                        <select name="type" id="type" class="form-control" onchange="generatePageForm()">
+                            <option>Text</option>
+                            <option>Video</option>
+                            <option>Audio</option>
+                            <option>Multiple Choice</option>
+                            <option>Short Answer</option>
+                            <option>Select Answers</option>
+                        </select>
+                    </div>
+
+                    <div id="{{ 'page-' + i|string + '-form' }}">
+
+                    </div>
+                    <br>
+                    <a>-------------------</a>
+                    {% endfor %}
+                    <br>
+
+                    <td><button type="button" onclick="window.location.href='{{ url_for('create_class', numPages=(numPages|int + 1)) }}'">Add Page</button></td>
+
+                    <input type="submit" class="btn btn-light" name="submit" value="{{ numPages|int }}">
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/createClass.js' ) }}"></script>
+{% endblock %}

@@ -1,6 +1,6 @@
 from _sha256 import sha256
 from bson import ObjectId
-from google.cloud import storage
+#from google.cloud import storage
 import pymongo as pymongo
 import base64
 import gridfs
@@ -14,7 +14,7 @@ houses = db.houses
 reports = db.reports
 fs = gridfs.GridFS(db)
 
-
+"""
 def upload_blob(bucket_name, source_file_name, destination_blob_name):
     # bucket_name = "your-bucket-name"
     # source_file_name = "local/path/to/file"
@@ -33,7 +33,7 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     )
 
     return "https://storage.cloud.google.com/freebird-images/" + destination_blob_name
-
+"""
 
 # creates a user in the database with a username, password, and post id
 def create_user(username, password):

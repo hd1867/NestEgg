@@ -140,6 +140,21 @@ def classes():
     return render_template("classes.html", classes=databaseUtils.get_classes())
 
 
+@app.route("/createClass", methods=["GET", "POST"])
+def create_class():
+    if request.args.get('numPages'):
+        return render_template("createClass.html", numPages=request.args.get('numPages'))
+
+    else:
+        return render_template("createClass.html", numPages=1)
+
+
+@app.route("/postClass", methods=["GET", "POST"])
+def post_class():
+    print(request.form)
+    return render_template("createClass.html", numPages=1)
+
+
 @app.route("/report_button", methods=["POST"])
 def report_button():
     flash("Thank you for the feedback!")
