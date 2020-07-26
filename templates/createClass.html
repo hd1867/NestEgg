@@ -35,7 +35,7 @@
 
                     <div class="form-group">
                         <label for="type">Page Type:</label><br>
-                        <select name="type" id="type" class="form-control" onchange="generatePageForm()">
+                        <select name="{{ 'type' + i|string }}" id="{{ 'type' + i|string }}" class="form-control" onchange="generatePageForm()">
                             <option>Text</option>
                             <option>Video</option>
                             <option>Audio</option>
@@ -53,9 +53,11 @@
                     {% endfor %}
                     <br>
 
+                    <input type="hidden" name="totalPages" value="{{ numPages|int }}">
+
                     <td><button type="button" onclick="window.location.href='{{ url_for('create_class', numPages=(numPages|int + 1)) }}'">Add Page</button></td>
 
-                    <input type="submit" class="btn btn-light" name="submit" value="{{ numPages|int }}">
+                    <input type="submit" class="btn btn-light" name="submit" value="Submit">
         </form>
 
     </div>
