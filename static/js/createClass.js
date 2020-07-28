@@ -1,6 +1,6 @@
 function generatePageForm()
 {
-    let selects = document.getElementsByName("type");
+    let selects = document.getElementsByName("pageType");
     let numAnswers;
     let answers;
     let numSelector;
@@ -51,45 +51,57 @@ function generatePageForm()
                 numAnswers = 1;
                 answers = document.createElement('div');
 
+                let qLabel = document.createElement('label');
+                qLabel.innerText = "Question:";
+                qLabel.htmlFor = "McQ" + i;
+
+                let mcQ = document.createElement('input');
+                mcQ.type = 'text';
+                mcQ.id = "McQ" + i;
+                mcQ.name = "McQ"  + i;
+                mcQ.className = 'form-control';
+
                 label.innerText = "Number of Options"
-                label.htmlFor = "McQ" + i;
+                label.htmlFor = "numOptions" + i;
 
                 numSelector = document.createElement("select");
-                for( let i = 0; i < 10; i++ )
+                for( let k = 0; k < 10; k++ )
                 {
                     let temp = document.createElement('option');
-                    temp.innerText = i.toString();
+                    temp.innerText = k.toString();
                     numSelector.append(temp);
                 }
 
+                numSelector.name = "McNumAnswers" + i;
+                numSelector.id = "McNumAnswers" + i;
                 numSelector.onchange = function ()
                 {
                     numAnswers = parseInt(numSelector.value);
                     console.log(numAnswers);
                     answers.innerHTML = "";
 
-                    for(let i = 0; i < numAnswers; i++)
+                    for(let j = 0; j < numAnswers; j++)
                     {
                         var tempWrap = document.createElement('div');
                         tempWrap.className = 'row';
 
                         var tempLabel = document.createElement("label");
-                        tempLabel.htmlFor = "McA" + i;
-                        tempLabel.innerText = "Answer  " + (i + 1);
+                        tempLabel.htmlFor = "McA" + j;
+                        tempLabel.innerText = "Answer  " + (j + 1);
 
                         tempWrap.append(tempLabel);
 
                         var tempInput = document.createElement('input');
                         tempInput.type = 'text';
-                        tempInput.id = 'McA' + i;
-                        tempInput.name = 'McA' + i;
+                        tempInput.id = 'McA' +  i + j;
+                        tempInput.name = 'McA' + i + j;
 
                         tempWrap.append(tempInput);
 
                         var tempCorrect = document.createElement('input');
                         tempCorrect.type = 'checkbox';
-                        tempCorrect.id = 'McC' + i;
-                        tempCorrect.name = "McC" + i;
+                        tempCorrect.id = 'McC' + i + j;
+                        tempCorrect.name = "McC" + i + j;
 
                         tempWrap.append(tempCorrect);
 
@@ -97,6 +109,8 @@ function generatePageForm()
                     }
                 }
 
+                wrapper.append(qLabel);
+                wrapper.append(mcQ);
                 wrapper.append(label);
                 wrapper.append(numSelector);
                 wrapper.append(answers);
@@ -137,41 +151,54 @@ function generatePageForm()
                 numAnswers = 1;
                 let selAnswers = document.createElement('div');
 
+                let qSelLabel = document.createElement('label');
+                qSelLabel.innerText = "Question:";
+                qSelLabel.htmlFor = "SelQ" + i;
+
+                let selQ = document.createElement('input');
+                selQ.type = 'text';
+                selQ.id = "SelQ" + i;
+                selQ.name = "SelQ"  + i;
+                selQ.className = 'form-control';
+
                 label.innerText = "Number of Options"
                 label.htmlFor = "SelQ" + i;
 
                 var selNumSelector = document.createElement("select");
-                for( let i = 0; i < 10; i++ )
+                for( let j = 0; j < 10; j++ )
                 {
                     let temp = document.createElement('option');
-                    temp.innerText = i.toString();
+                    temp.innerText = j.toString();
+
                     selNumSelector.append(temp);
                 }
 
+                selNumSelector.name = "SelNumAnswers" + i;
+                selNumSelector.id = "SelNumAnswers" + i;
                 selNumSelector.onchange = function ()
                 {
                     numAnswers = parseInt(selNumSelector.value);
                     console.log(numAnswers);
                     selAnswers.innerHTML = "";
 
-                    for(let i = 0; i < numAnswers; i++)
+                    for(let k = 0; k < numAnswers; k++)
                     {
                         var tempWrap = document.createElement('div');
                         tempWrap.className = 'row';
 
                         var tempLabel = document.createElement("label");
-                        tempLabel.htmlFor = "SelA" + i;
-                        tempLabel.innerText = "Answer  " + (i + 1);
+                        tempLabel.htmlFor = "SelA" + i + k;
+                        tempLabel.innerText = "Answer  " + (k + 1);
 
                         var tempInput = document.createElement('input');
                         tempInput.type = 'text';
-                        tempInput.id = 'SelA' + i;
-                        tempInput.name = 'SelA' + i;
+                        tempInput.id = 'SelA' + i + k;
+                        tempInput.name = 'SelA' + i + k;
 
                         var tempCorrect = document.createElement('input');
                         tempCorrect.type = 'checkbox';
-                        tempInput.id = 'SelC' + i;
-                        tempInput.name = "SelC" + i;
+                        tempInput.id = 'SelC' + i + k;
+                        tempInput.name = "SelC" + i + k;
 
                         tempWrap.append(tempLabel);
                         tempWrap.append(tempInput);
@@ -181,6 +208,8 @@ function generatePageForm()
                     }
                 }
 
+                wrapper.append(qSelLabel);
+                wrapper.append(selQ);
                 wrapper.append(label);
                 wrapper.append(selNumSelector);
                 wrapper.append(selAnswers);

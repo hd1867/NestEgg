@@ -152,7 +152,73 @@ def create_class():
 @app.route("/postClass", methods=["GET", "POST"])
 def post_class():
     print(request.form)
-    return render_template("createClass.html", numPages=1)
+
+    pages = []
+
+    for i in range(int(request.form['totalPages'])):
+        type = request.form['pageType'][i]
+        tempPage = {
+            'title': request.form['page-' + str(i + 1) + '-title'],
+            'type': type
+        }
+
+        if type == 'Text':
+            tempPage['text'] = request.form['text' + str(i)]
+
+        elif type == 'Audio':
+            filename = str(randint(0, 999999999999)) + ".wav"
+
+            if 'uploadFile' + str(i) not in request.files:
+                flash("No File Uploaded")
+                return redirect(request.url)
+
+            file = request.files['uploadFile' + str(i)]
+            if file.filename == '':
+                flash("No  selected file")
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        elif type == 'Video':
+            filename = str(randint(0, 999999999999)) + ".mp4"
+
+            if 'uploadFile' + str(i) not in request.files:
+                flash("No File Uploaded")
+                return redirect(request.url)
+
+            file = request.files['uploadFile' + str(i)]
+            if file.filename == '':
+                flash("No  selected file")
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        elif type == 'Multiple Choice':
+            tempPage['question'] = request.form['McQ' + str(i)]
+            tempPage['answers'] = []
+            for j in range(int(request.form['McNumAnswers' + str(i)])):
+                tempPage['answers'].append(request.form['McA' + str(i) + str(j)])
+                if request.form["McC" + str(i) + str(j)]:
+                    tempPage['correct'] = j
+
+        elif type == 'Select Answers':
+            tempPage['question'] = request.form['SelQ' + str(i)]
+            tempPage['answers'] = []
+            for j in range(int(request.form['McNumAnswers' + str(i)])):
+                tempPage['answers'].append(request.form['SelA' + str(i) + str(j)])
+                if request.form["SelC" + str(i) + str(j)]:
+                    tempPage['correct'] = j
+
+        elif type == 'Short Answer':
+            tempPage['question'] = request.form['SaQ' + str(i)]
+            tempPage['answers'] = request.form['SaKey' + str(i)].split(';').strip()
+
+        pages.append(tempPage)
+
+    databaseUtils.add_class(request.form['title'], request.form['prerequisites'], request.form['description'], pages)
+
+    flash("Class Created!")
+    return render_template("classes.html")
 
 
 @app.route("/report_button", methods=["POST"])

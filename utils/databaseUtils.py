@@ -139,10 +139,10 @@ def get_classes():
 # creates a class and adds it to the database
 def add_class(title, prerequisites, description, pages):
     new_class = {
-        "title":title,
-        "prerequisites":prerequisites,
-        "description":description,
-        "content":[]
+        "title": title,
+        "prerequisites": prerequisites,
+        "description": description,
+        "content": []
     }
 
     for page in pages:
