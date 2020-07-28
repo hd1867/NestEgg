@@ -156,7 +156,7 @@ def post_class():
     pages = []
 
     for i in range(int(request.form['totalPages'])):
-        type = request.form['pageType'][i]
+        type = request.form['pageType']
         tempPage = {
             'title': request.form['page-' + str(i + 1) + '-title'],
             'type': type
@@ -197,28 +197,29 @@ def post_class():
             tempPage['question'] = request.form['McQ' + str(i)]
             tempPage['answers'] = []
             for j in range(int(request.form['McNumAnswers' + str(i)])):
-                tempPage['answers'].append(request.form['McA' + str(i) + str(j)])
-                if request.form["McC" + str(i) + str(j)]:
+                tempPage['answers'].append(request.form['McA' + str(i + 1) + str(j)])
+                if request.form["McC" + str(i + 1) + str(j)]:
                     tempPage['correct'] = j
 
         elif type == 'Select Answers':
             tempPage['question'] = request.form['SelQ' + str(i)]
             tempPage['answers'] = []
+            tempPage['correct'] = []
             for j in range(int(request.form['McNumAnswers' + str(i)])):
-                tempPage['answers'].append(request.form['SelA' + str(i) + str(j)])
-                if request.form["SelC" + str(i) + str(j)]:
-                    tempPage['correct'] = j
+                tempPage['answers'].append(request.form['SelA' + str(i + 1) + str(j)])
+                if request.form["SelC" + str(i + 1) + str(j)]:
+                    tempPage['correct'] += j
 
         elif type == 'Short Answer':
             tempPage['question'] = request.form['SaQ' + str(i)]
-            tempPage['answers'] = request.form['SaKey' + str(i)].split(';').strip()
+            tempPage['answers'] = request.form['SaKey' + str(i)].split(';')
 
         pages.append(tempPage)
 
     databaseUtils.add_class(request.form['title'], request.form['prerequisites'], request.form['description'], pages)
 
     flash("Class Created!")
-    return render_template("classes.html")
+    return redirect(url_for('classes'))
 
 
 @app.route("/report_button", methods=["POST"])

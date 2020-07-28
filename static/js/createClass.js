@@ -68,7 +68,7 @@ function generatePageForm()
                 for( let k = 0; k < 10; k++ )
                 {
                     let temp = document.createElement('option');
-                    temp.innerText = k.toString();
+                    temp.innerText = (k + 1).toString();
                     numSelector.append(temp);
                 }
 
@@ -168,7 +168,7 @@ function generatePageForm()
                 for( let j = 0; j < 10; j++ )
                 {
                     let temp = document.createElement('option');
-                    temp.innerText = j.toString();
+                    temp.innerText = (j+1).toString();
 
                     selNumSelector.append(temp);
                 }
