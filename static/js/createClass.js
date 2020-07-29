@@ -1,11 +1,11 @@
 function generatePageForm()
 {
-    let selects = document.getElementsByName("pageType");
+    let pageNumbers = document.getElementById('totalPages').value;
     let numAnswers;
     let answers;
     let numSelector;
 
-    for (var i = 0; i < selects.length; i++) {
+    for (let i = 0; i < pageNumbers; i++) {
         let wrapper = document.createElement('div');
         let label = document.createElement('label');
         wrapper.className = "form-group";
@@ -13,7 +13,10 @@ function generatePageForm()
         let pageForm = document.getElementById('page-' + i + '-form');
         pageForm.innerHTML = "";
 
-        switch (selects[i].value) {
+        let formSelect = document.getElementById('pageType' + i);
+        console.log(i + 1)
+
+        switch (formSelect.value) {
             case 'Text':
                 label.innerText = "Text:";
                 label.htmlFor = "text" + i;
@@ -197,8 +200,8 @@ function generatePageForm()
 
                         var tempCorrect = document.createElement('input');
                         tempCorrect.type = 'checkbox';
-                        tempInput.id = 'SelC' + i + k;
-                        tempInput.name = "SelC" + i + k;
+                        tempCorrect.id = 'SelC' + i + k;
+                        tempCorrect.name = "SelC" + i + k;
 
                         tempWrap.append(tempLabel);
                         tempWrap.append(tempInput);

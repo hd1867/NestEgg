@@ -20,7 +20,7 @@
             <tbody>
             {% for class in classes %}
                 <tr>
-                    <td>{{ class.name }}</td>
+                    <td>{{ class.title }}</td>
                     <td>{{ class.prerequisites }}</td>
                     <td>{{ class.description }}</td>
                     <td><button type="button" onclick="window.location.href='{{ url_for('job', classid=(class._id|string)) }}'">Take Class</button></td>

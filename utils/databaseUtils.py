@@ -137,8 +137,9 @@ def get_classes():
 
 
 # creates a class and adds it to the database
-def add_class(title, prerequisites, description, pages):
+def add_class(title, prerequisites, description, pages, creator):
     new_class = {
+        "creator": creator,
         "title": title,
         "prerequisites": prerequisites,
         "description": description,

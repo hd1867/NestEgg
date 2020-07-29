@@ -12,7 +12,7 @@ from utils import databaseUtils
 
 
 UPLOAD_FOLDER = "C:\\Users\\18452\\Documents\\Development\\WebDev\\NestEgg\\static\\img"
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4', 'wav'}
 
 
 def require_login(f):
@@ -145,6 +145,7 @@ def create_class():
     if request.args.get('numPages'):
         return render_template("createClass.html", numPages=request.args.get('numPages'))
 
+
     else:
         return render_template("createClass.html", numPages=1)
 
@@ -152,11 +153,13 @@ def create_class():
 @app.route("/postClass", methods=["GET", "POST"])
 def post_class():
     print(request.form)
+    print(request.files)
 
     pages = []
 
     for i in range(int(request.form['totalPages'])):
-        type = request.form['pageType']
+        print(i)
+        type = request.form['pageType' + str(i)]
         tempPage = {
             'title': request.form['page-' + str(i + 1) + '-title'],
             'type': type
@@ -168,55 +171,65 @@ def post_class():
         elif type == 'Audio':
             filename = str(randint(0, 999999999999)) + ".wav"
 
-            if 'uploadFile' + str(i) not in request.files:
+            if 'fileUpload' + str(i) not in request.files:
+                print("No File Uploaded")
                 flash("No File Uploaded")
-                return redirect(request.url)
+                #return redirect(request.url)
 
-            file = request.files['uploadFile' + str(i)]
+            file = request.files['fileUpload' + str(i)]
             if file.filename == '':
                 flash("No  selected file")
                 return redirect(request.url)
             if file and allowed_file(file.filename):
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            tempPage['file'] = filename
 
         elif type == 'Video':
             filename = str(randint(0, 999999999999)) + ".mp4"
 
-            if 'uploadFile' + str(i) not in request.files:
+            if 'fileUpload' + str(i) not in request.files:
+                print("No File Uploaded")
                 flash("No File Uploaded")
-                return redirect(request.url)
+                #return redirect(request.url)
 
-            file = request.files['uploadFile' + str(i)]
+            file = request.files['fileUpload' + str(i)]
             if file.filename == '':
                 flash("No  selected file")
                 return redirect(request.url)
             if file and allowed_file(file.filename):
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            tempPage['file'] = filename
 
         elif type == 'Multiple Choice':
             tempPage['question'] = request.form['McQ' + str(i)]
             tempPage['answers'] = []
             for j in range(int(request.form['McNumAnswers' + str(i)])):
-                tempPage['answers'].append(request.form['McA' + str(i + 1) + str(j)])
-                if request.form["McC" + str(i + 1) + str(j)]:
+                tempPage['answers'].append(request.form['McA' + str(request.form['totalPages']) + str(j)])
+                if 'McC' + str(request.form['totalPages']) + str(j) in request.form: #["McC" + str(i + 1) + str(j)]:
                     tempPage['correct'] = j
 
         elif type == 'Select Answers':
             tempPage['question'] = request.form['SelQ' + str(i)]
             tempPage['answers'] = []
             tempPage['correct'] = []
-            for j in range(int(request.form['McNumAnswers' + str(i)])):
-                tempPage['answers'].append(request.form['SelA' + str(i + 1) + str(j)])
-                if request.form["SelC" + str(i + 1) + str(j)]:
-                    tempPage['correct'] += j
+            for j in range(int(request.form['SelNumAnswers' + str(i)])):
+                tempPage['answers'].append(request.form['SelC' + str(request.form['totalPages']) + str(j)])
+                if "SelC" + str(request.form['totalPages']) + str(j) in request.form:
+                    tempPage['correct'].append(j)
 
         elif type == 'Short Answer':
             tempPage['question'] = request.form['SaQ' + str(i)]
             tempPage['answers'] = request.form['SaKey' + str(i)].split(';')
 
         pages.append(tempPage)
+    if 'user' in session:
+        databaseUtils.add_class(request.form['title'], request.form['prerequisites'], request.form['description'], pages, session['user'])
+    else:
+        databaseUtils.add_class(request.form['title'], request.form['prerequisites'], request.form['description'],
+                                pages, None)
 
-    databaseUtils.add_class(request.form['title'], request.form['prerequisites'], request.form['description'], pages)
 
     flash("Class Created!")
     return redirect(url_for('classes'))
