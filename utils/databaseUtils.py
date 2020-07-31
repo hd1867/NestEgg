@@ -107,6 +107,10 @@ def get_houses():
     return houses.find({})
 
 
+def get_house_by_id(houseid):
+    return houses.find_one({"_id": ObjectId(houseid)})
+
+
 def add_house(price, location, term, owner, img):
     house = houses.insert_one\
         ({
@@ -125,11 +129,19 @@ def add_to_watchlist(userid, houseid):
     if user['watchList'] is None:
         user['watchList'] = [houseid]
     else:
-        user['watchList'] += [houseid]
+        user['watchList'].append(houseid)
 
     new_value = {"$set": {"watchList": user['watchList']}}
     users.update_one(get_user_by_id(userid), new_value)
 
+
+def get_watchlist(userid):
+    user = get_user_by_id(userid)
+    watchlist = []
+    for houseid in user['watchList']:
+        watchlist.append(houseid)
+    
+    return watchlist
 
 # returns a list of all the class listings
 def get_classes():

@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block active_link %}house-link{% endblock %}
+{% block active_link %}class-link{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/class.css' ) }}">
 {% endblock %}
 
 {% block body %}
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleIndicators" class="carousel slide" data-interval="false">
         <ol class="carousel-indicators">
             {% for i in range(shown_class.content|length + 1) %}
                 {% if i == 0 %}
@@ -38,11 +38,11 @@
                         {% endif %}
                         {% if page.type == 'Multiple Choice' %}
                             <h6>{{ page.question }}</h6>
-                            <form>
+                            <form id="{{ 'mc' + loop.index|string }}">
+                                <input type="hidden" name="{{ 'mc-' + page.title + '-correct' }}"  id="{{ 'mc-' + page.title + '-correct' }}" value={{ page.correct }}>
                                 {% for answer in page.answers %}
-                                    <div class="form-check">
-                                        <input type="hidden" name="{{ 'mc-' + page.title + '-correct' }}"  id="{{ 'mc-' + page.title + '-correct' }}" value={{ page.correct }}>
-                                        <input class="form-check-input" type="radio" name="{{ 'mc-' + page.title }}" id="{{ 'mc-' + page.title }}" value="option1" checked>
+                                    <div class="form-check">            
+                                        <input class="form-check-input" type="radio" name="{{ 'mc-' + page.title }}" id="{{ 'mc-' + page.title }}" value="{{ loop.index }}">
                                         <label class="form-check-label" for="{{ 'mc-' + page.title }}">{{ answer }}</label>
                                     </div>
                                 {% endfor %}
@@ -50,10 +50,10 @@
                         {% endif %}
                         {% if page.type == 'Select Answers' %}
                             <h6>{{ page.question }}</h6>
-                            <form>
+                            <form id="{{ 'sel' + loop.index|string }}">
+                                <input type="hidden" name="{{ 'sel-' + page.title + '-correct' }}"  id="{{ 'sel-' + page.title + '-correct' }}" value={{ page.correct|join }}>
                                 {% for answer in page.answers %}
-                                    <div class="form-check">
-                                        <input type="hidden" name="{{ 'sel-' + page.title + '-correct' }}"  id="{{ 'sel-' + page.title + '-correct' }}" value={{ page.correct }}>
+                                    <div class="form-check">                                        
                                         <input class="form-check-input" type="checkbox" value="" name="{{ 'sel-' + page.title }}" id="{{ 'sel-' + page.title }}">
                                         <label class="form-check-label" for="{{ 'sel-' + page.title }}">{{ answer }}</label>
                                     </div>
@@ -62,7 +62,8 @@
                         {% endif %}
                         {% if page.type == 'Short Answer' %}
                             <h6>{{ page.question }}</h6>
-                            <form>
+                            <form id="{{ 'sa' + loop.index|string }}">
+                                <input type="hidden" name="{{ 'sa-' + page.title + '-correct' }}" id="{{ 'sa-' + page.title + '-correct' }}" value={{ page.correct }}>
                                 <input class="form-control" type="text" name="{{ 'sa-' + page.title }}" id="{{ 'sa-' + page.title }}">
                             </form>
                         {% endif %}
@@ -71,7 +72,7 @@
             {% endfor %}
             <div class="carousel-item">
                 <div class="card">
-                    <h2>Class Complete!</h2>
+                    <h2>Submit Answers</h2>
                     <input type="button" class="btn" name="submit" value="Class Completed!" onclick="submitAnswers()">
                 </div>
             </div>

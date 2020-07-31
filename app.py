@@ -50,8 +50,10 @@ def modify_query(origin, **new_values):
 
 @app.route('/')
 def root():
-    return render_template("home.html")
-
+    if 'user' not in session:
+        return render_template("home.html", jobs=databaseUtils.get_jobs(), classes=databaseUtils.get_classes())
+    
+    return render_template("home.html", jobs=databaseUtils.get_jobs(), classes=databaseUtils.get_classes(), watchlist=databaseUtils.get_watchlist(session['user']))
 
 @app.route("/report")
 @require_login
@@ -90,9 +92,9 @@ def postJob():
         flash("No field can be left blank")
         return redirect(url_for("createJob"))
 
-    temp = databaseUtils.add_job(request.form['position'], request.form['company'], request.form['term'],
-                                 request.form['requirements'], request.form['location'], request.form['salary'],
-                                 request.form['description'])
+    databaseUtils.add_job(request.form['position'], request.form['company'], request.form['term'],
+                          request.form['requirements'], request.form['location'], request.form['salary'],
+                          request.form['description'])
 
     flash("Job Posted!")
     return redirect(url_for('jobs'))

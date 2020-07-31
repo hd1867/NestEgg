@@ -24,20 +24,45 @@
         <div class="card" id="classes">
             <div id="title">Latest Classes</div>
             <div>
-
+                {% if classes.count|int <= 5 %}
+                    {% for class in classes %}
+                        <br>
+                        <h5>{{ class.title }}</h5>
+                    {% endfor %}
+                {% else %}
+                    {% for i in range(5) %}
+                        <br>
+                        <h5>{{ classes.find()[i].title }}</h5>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
         <div class="card" id="jobs">
             <div id="title">Newest Jobs</div>
             <div>
-
+                {% if jobs.count|int <= 5 %}
+                    {% for job in jobs %}
+                        <br>
+                        <h5>{{ job.position }}</h5>
+                        <h6>{{ job.company }}</h6>     
+                    {% endfor %}
+                {% else %}
+                    {% for i in range(5) %}
+                        <br>
+                        <h5>{{ jobs.find()[i].position }}</h5>
+                        <h6>{{ jobs.find()[i].company }}</h6>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
         {% if 'user' in session %}
         <div class="card" id="watchlist">
             <div id="title">Housing Watchlist</div>
             <div>
-
+                {% for house in watchlist %}
+                    <br>
+                    <h5>{{ house.location }} - {{ house.price }}</h5>
+                {% endfor %}
             </div>
         </div>
         {% endif %}
