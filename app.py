@@ -235,6 +235,11 @@ def post_class():
     return redirect(url_for('classes'))
 
 
+@app.route('/class')
+def show_class():
+    return render_template('class.html', shown_class=databaseUtils.get_class_by_id(request.args.get('classid')))
+
+
 @app.route("/report_button", methods=["POST"])
 def report_button():
     flash("Thank you for the feedback!")

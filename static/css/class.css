@@ -1,0 +1,22 @@
+.card
+{
+    left: 11.2%;
+    width: 70%;
+}
+
+.carousel-indicators
+{
+    background-color: #000000;
+}
+
+.carousel-control-next
+{
+    background-color: #000000;
+    width: 5%;
+}
+
+.carousel-control-prev
+{
+    background-color: #000000;
+    width: 5%;
+}

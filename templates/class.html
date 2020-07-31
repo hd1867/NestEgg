@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block active_link %}house-link{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/class.css' ) }}">
+{% endblock %}
+
+{% block body %}
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            {% for i in range(shown_class.content|length + 1) %}
+                {% if i == 0 %}
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                {% else %}
+                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ i }}"></li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner">
+            {% for page in shown_class.content %}
+                <div class="carousel-item{% if loop.index == 1 %} active{% endif %}" data-interval="false">
+                    <div class="card">
+                        <h5>{{ page.title }}</h5>
+                        <br>
+                        {% if page.type == 'Text' %}
+                            <p>{{ page.text }}</p>
+                        {% endif %}
+                        {% if page.type  == 'Video'%}
+                            <video width="320" height="240" controls>
+                                <source src="{{ "static/img/" + page.file }}" type="video/mp4">
+                            </video>
+                        {% endif %}
+                        {% if page.type == 'Audio' %}
+                            <audio controls>
+                                <source src="{{ 'static/img/' + page.file }}" type="audio/wav">
+                            </audio>
+                        {% endif %}
+                        {% if page.type == 'Multiple Choice' %}
+                            <h6>{{ page.question }}</h6>
+                            <form>
+                                {% for answer in page.answers %}
+                                    <div class="form-check">
+                                        <input type="hidden" name="{{ 'mc-' + page.title + '-correct' }}"  id="{{ 'mc-' + page.title + '-correct' }}" value={{ page.correct }}>
+                                        <input class="form-check-input" type="radio" name="{{ 'mc-' + page.title }}" id="{{ 'mc-' + page.title }}" value="option1" checked>
+                                        <label class="form-check-label" for="{{ 'mc-' + page.title }}">{{ answer }}</label>
+                                    </div>
+                                {% endfor %}
+                            </form>
+                        {% endif %}
+                        {% if page.type == 'Select Answers' %}
+                            <h6>{{ page.question }}</h6>
+                            <form>
+                                {% for answer in page.answers %}
+                                    <div class="form-check">
+                                        <input type="hidden" name="{{ 'sel-' + page.title + '-correct' }}"  id="{{ 'sel-' + page.title + '-correct' }}" value={{ page.correct }}>
+                                        <input class="form-check-input" type="checkbox" value="" name="{{ 'sel-' + page.title }}" id="{{ 'sel-' + page.title }}">
+                                        <label class="form-check-label" for="{{ 'sel-' + page.title }}">{{ answer }}</label>
+                                    </div>
+                                {% endfor %}
+                            </form>
+                        {% endif %}
+                        {% if page.type == 'Short Answer' %}
+                            <h6>{{ page.question }}</h6>
+                            <form>
+                                <input class="form-control" type="text" name="{{ 'sa-' + page.title }}" id="{{ 'sa-' + page.title }}">
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="carousel-item">
+                <div class="card">
+                    <h2>Class Complete!</h2>
+                    <input type="button" class="btn" name="submit" value="Class Completed!" onclick="submitAnswers()">
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/showClass.js' ) }}"></script>
+{% endblock %}

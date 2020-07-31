@@ -136,6 +136,9 @@ def get_classes():
     return classes.find({})
 
 
+def get_class_by_id(classid):
+    return classes.find_one({"_id": ObjectId(classid)})
+
 # creates a class and adds it to the database
 def add_class(title, prerequisites, description, pages, creator):
     new_class = {
