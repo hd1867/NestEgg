@@ -266,10 +266,23 @@ def report_button():
     return redirect('/report')
 
 
-@app.route("/profile/<username>")
+@app.route("/messages")
 @require_login
-def profile(username):
-    return render_template("profile.html", user=databaseUtils.get_user_by_name(username))
+def messages():
+    return render_template("messages.html", user=databaseUtils.get_user_by_id(session['user']), messages=databaseUtils.get_messages_by_user(session['user']))
+
+
+@app.route("/sendMessage")
+@require_login
+def send_message():
+    return render_template("sendMessage.html")
+
+
+@app.route("/postMessage")
+@require_login
+def post_message():
+    databaseUtils.send_message(session['user'], databaseUtils.get_user_by_name(request.form['to']), request.form['subject'], request.form['message'])
+    return redirect(url_for('messages'))
 
 
 @app.route('/login')

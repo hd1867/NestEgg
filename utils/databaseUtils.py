@@ -12,6 +12,7 @@ jobs = db.jobs
 classes = db.classes
 houses = db.houses
 reports = db.reports
+messages = db.messages
 fs = gridfs.GridFS(db)
 
 """
@@ -225,3 +226,22 @@ def is_admin(userid):
 # returns a picture (image file)
 def get_picture(picture):
     return fs.get(picture).read()
+
+
+def send_message(senderid, receiverid, subject, message):
+    messages.insert_one({
+        "sender": senderid,
+        "receiver": receiverid,
+        "subject": subject,
+        "message": message
+    })
+
+
+def get_messages_by_user(userid):
+    allMessages = messages.find({})
+    userMessages = []
+    for message in allMessages:
+        if(message['receiver'] == userid):
+            userMessages.append(message)
+
+    return userMessages

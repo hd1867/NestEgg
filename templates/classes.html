@@ -2,13 +2,17 @@
 
 {% block active_link %}class-link{% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/classes.css' ) }}">
+{% endblock %}
+
 {% block body %}
     {% if session['admin'] %}
     <button id="jobsCreate" onclick="document.location.href='/createClass'">Create a Class</button>
     {% endif %}
 
     <div class="column">
-        <table class="display" id="classesTable">
+        <table class="display cell-border" id="classesTable">
             <thead>
                 <tr>
                     <th>Name</th>

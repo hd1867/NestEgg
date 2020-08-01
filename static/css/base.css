@@ -56,8 +56,9 @@ button {
     background-color: #FFF;
     width: 80vw;
     position: absolute;
-    height: available;
     left: 10vw;
+    margin: auto;
+
 }
 
 .btn {

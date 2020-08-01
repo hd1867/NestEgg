@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block active_link %}profile-link{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/messages.css' ) }}">
+{% endblock %}
+
+{% block body %}
+    <h3>{{ user.username }}'s Messages</h3>
+    <br>
+    <button class="btn" href="/sendMessage">Send Message</button>
+    <br>
+    <ul class="list-group">
+        <a class="list-group-item list-group-item-action">
+            <h5>Demo Message</h5>
+            <h6>Demo Message</h6>
+        </a>
+    </ul>
+
+
+{% endblock %}
