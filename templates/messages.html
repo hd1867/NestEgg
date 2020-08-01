@@ -9,14 +9,32 @@
 {% block body %}
     <h3>{{ user.username }}'s Messages</h3>
     <br>
-    <button class="btn" href="/sendMessage">Send Message</button>
-    <br>
-    <ul class="list-group">
-        <a class="list-group-item list-group-item-action">
-            <h5>Demo Message</h5>
-            <h6>Demo Message</h6>
-        </a>
-    </ul>
+    <div class="container">
+        <div class="row justify-content-start">
+            <div class="col-4">
+                <form action="/sendMessage" method="post">
+                    <button class="btn" type="submit">Send Message</button>
+                </form>
+                <br>
+                <ul class="list-group" style="width: 20vw">
+                    <a class="list-group-item list-group-item-action">
+                        <h5>Demo Message</h5>
+                        <h6>Demo Message</h6>
+                    </a>
+                    {% for message in messages %}
+                        <a class="list-group-item list-group-item-action">
+                            <h5>{{ message.subject }}</h5>
+                            <h6>From: {{ message.sender }}</h6>
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-lg">
+                <h4 id="messageSubject">Message Subject</h4>
+                <p id="messageBody">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce maximus velit et est sagittis, eget dignissim urna iaculis. Praesent et venenatis mauris, eu elementum sem. Aenean ex lectus, ornare quis enim nec, consectetur hendrerit augue. Suspendisse quis imperdiet tortor, sed fringilla ex. Aliquam erat volutpat. Pellentesque rutrum nisl quis molestie commodo. Nulla a tellus velit. Fusce rhoncus sem et lorem vulputate cursus. Sed placerat scelerisque fringilla. Phasellus tincidunt pulvinar leo non faucibus. Nullam urna nisi, faucibus eget elementum id, hendrerit venenatis magna. Proin bibendum erat ac felis condimentum porta. Quisque sollicitudin diam quis enim facilisis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus blandit felis velit, congue viverra ante eleifend vel. </p>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}

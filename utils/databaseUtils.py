@@ -228,9 +228,9 @@ def get_picture(picture):
     return fs.get(picture).read()
 
 
-def send_message(senderid, receiverid, subject, message):
+def send_message(sender, receiverid, subject, message):
     messages.insert_one({
-        "sender": senderid,
+        "sender": sender,
         "receiver": receiverid,
         "subject": subject,
         "message": message
@@ -241,7 +241,7 @@ def get_messages_by_user(userid):
     allMessages = messages.find({})
     userMessages = []
     for message in allMessages:
-        if(message['receiver'] == userid):
+        if(str(message['receiver']) == userid):
             userMessages.append(message)
 
     return userMessages

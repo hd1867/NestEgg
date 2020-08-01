@@ -272,16 +272,17 @@ def messages():
     return render_template("messages.html", user=databaseUtils.get_user_by_id(session['user']), messages=databaseUtils.get_messages_by_user(session['user']))
 
 
-@app.route("/sendMessage")
+@app.route("/sendMessage", methods=["GET", "POST"])
 @require_login
 def send_message():
     return render_template("sendMessage.html")
 
 
-@app.route("/postMessage")
+@app.route("/postMessage", methods=["GET", "POST"])
 @require_login
 def post_message():
-    databaseUtils.send_message(session['user'], databaseUtils.get_user_by_name(request.form['to']), request.form['subject'], request.form['message'])
+    databaseUtils.send_message(session['username'], databaseUtils.get_user_by_name(request.form['to'])['_id'], request.form['subject'], request.form['message'])
+    flash('Message Sent!')
     return redirect(url_for('messages'))
 
 
