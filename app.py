@@ -153,6 +153,7 @@ def create_class():
 
 
 @app.route("/postClass", methods=["GET", "POST"])
+@require_login
 def post_class():
     print(request.form)
     print(request.files)
@@ -223,7 +224,7 @@ def post_class():
 
         elif type == 'Short Answer':
             tempPage['question'] = request.form['SaQ' + str(i)]
-            tempPage['answers'] = request.form['SaKey' + str(i)].split(';')
+            tempPage['answers'] = request.form['SaKey' + str(i)]
 
         pages.append(tempPage)
     if 'user' in session:
@@ -238,8 +239,24 @@ def post_class():
 
 
 @app.route('/class')
+@require_login
 def show_class():
     return render_template('class.html', shown_class=databaseUtils.get_class_by_id(request.args.get('classid')))
+
+
+@app.route('/submitClass')
+@require_login
+def submit_class():
+    print(request.args)
+    score = float(request.args.get('score'))
+    if score >= .8:
+        databaseUtils.complete_class(session['user'], request.args.get('classid'))
+        flash("Class Passed")
+        return redirect(url_for('classes'))
+
+    else:
+        flash("You got less than 80% of questions correct, please try again")
+        return redirect(url_for('classes'))
 
 
 @app.route("/report_button", methods=["POST"])

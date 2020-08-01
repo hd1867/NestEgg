@@ -143,6 +143,7 @@ def get_watchlist(userid):
     
     return watchlist
 
+
 # returns a list of all the class listings
 def get_classes():
     return classes.find({})
@@ -150,6 +151,28 @@ def get_classes():
 
 def get_class_by_id(classid):
     return classes.find_one({"_id": ObjectId(classid)})
+
+
+def complete_class(userid, classid):
+    user = get_user_by_id(userid)
+
+    if user['certifications'] is None:
+        user['certifications'] = [classid]
+    else:
+        user['certifications'].append(classid)
+
+    new_value = {"$set": {"certifications": user['certifications']}}
+    users.update_one(get_user_by_id(userid), new_value)
+
+
+def get_certifications(userid):
+    user = get_user_by_id(userid)
+    certifications = []
+    for classid in user['certifications']:
+        certifications.append(classid)
+
+    return certifications
+
 
 # creates a class and adds it to the database
 def add_class(title, prerequisites, description, pages, creator):

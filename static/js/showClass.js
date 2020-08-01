@@ -27,19 +27,43 @@ function submitAnswers()
         {
             console.log("Short Answer");
             correctAnswer = forms[i].elements[0].value; 
-            
-            if(!(forms[i].elements[1].value.includes(correctAnswer)))
+            let answerList;
+            answerList = forms[i].elements[1].value;
+
+
+            for(let j = 0; j < answerList.length; answerList++)
             {
-                console.log("Question Incorrect")
-                totalWrong++;
+                if (!(correctAnswer.trim().includes(answerList[j])))
+                {
+                    console.log("Question Incorrect")
+                    totalWrong++;
+                    break;
+                }
             }
         }
         else
         {
-            console.log("Select Answer");
-            correctAnswers = forms[i].elements[0].value;
-            console.log(forms[i].elements);
+            let answerString = "";
+            correctAnswer = forms[i].elements[0].value;
+
+            for(let j = 0; j < forms[i].elements.length; j++)
+            {
+                if(i >= 1 && forms[i].elements[j].checked)
+                {
+                    answerString += (j - 1);
+                }
+            }
+
+            if(answerString !== correctAnswer)
+            {
+                console.log("Question Incorrect");
+                totalWrong++;
+            }
         }
     }
-    return (1 - totalWrong/totalQuestions);
+
+    let classid = document.getElementById('classId').value;
+    let score = (1 - totalWrong/totalQuestions).toString();
+
+    window.location.href = "/submitClass?score=" + score +"&classid=" + classid;
 }

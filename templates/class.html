@@ -63,7 +63,7 @@
                         {% if page.type == 'Short Answer' %}
                             <h6>{{ page.question }}</h6>
                             <form id="{{ 'sa' + loop.index|string }}">
-                                <input type="hidden" name="{{ 'sa-' + page.title + '-correct' }}" id="{{ 'sa-' + page.title + '-correct' }}" value={{ page.correct }}>
+                                <input type="hidden" name="{{ 'sa-' + page.title + '-correct' }}" id="{{ 'sa-' + page.title + '-correct' }}" value={{ page.answer }}>
                                 <input class="form-control" type="text" name="{{ 'sa-' + page.title }}" id="{{ 'sa-' + page.title }}">
                             </form>
                         {% endif %}
@@ -73,6 +73,7 @@
             <div class="carousel-item">
                 <div class="card">
                     <h2>Submit Answers</h2>
+                    <input type="hidden" class="btn" name="classId" id="classId" value="{{ shown_class._id }}">
                     <input type="button" class="btn" name="submit" value="Class Completed!" onclick="submitAnswers()">
                 </div>
             </div>
