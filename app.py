@@ -33,6 +33,9 @@ def allowed_file(filename):
 
 
 app = Flask(__name__)
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['SESSION_COOKIE_HTTPONLY']=True
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = os.urandom(16)
 Bootstrap(app)
@@ -239,7 +242,6 @@ def post_class():
 
 
 @app.route('/class')
-@require_login
 def show_class():
     return render_template('class.html', shown_class=databaseUtils.get_class_by_id(request.args.get('classid')))
 
@@ -342,4 +344,4 @@ def auth():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
